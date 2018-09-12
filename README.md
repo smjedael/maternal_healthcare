@@ -2,4 +2,4 @@ Data from the Centers of Disease Control and Prevention (CDC) show that Black wo
 
 Our team will attempt to investigate the following question: Are racial disparities in pregnancy-related deaths primarily the result of implicit bias or are they the result of attempts to address other health factors such as hypertension and diabetes during pregnancies?
 
-We will gather and analyze 2009-2016 vital statistics data from the CDC related to natality, maternal race, maternal morbidity and mortality, maternal health risk factors, and method of delivery (e.g. vaginal vs. cesarean). In addition, we will attempt to determine through multiple data visualizations whether racial disparities can be eliminated once risk factors and methods of delivery are considered.
+We will gather and analyze 2009-2016 vital statistics data from the CDC related to natality, maternal race, maternal morbidity and mortality, maternal health risk factors, and method of delivery (e.g. vaginal vs. cesarean). In addition, we will attempt to determine through multiple linear-regression analyses whether racial disparities can be eliminated once risk factors and methods of delivery are considered.
