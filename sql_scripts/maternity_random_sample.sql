@@ -13,7 +13,19 @@ SELECT
 	END AS `location`,
     a.age,
     CASE 
-		WHEN a.race = '1' THEN 'White'
+		WHEN CAST(a.age AS UNSIGNED) < 15 THEN '10-14'
+        WHEN CAST(a.age AS UNSIGNED) >= 15 AND CAST(a.age AS UNSIGNED) < 20 THEN '15-19'
+        WHEN CAST(a.age AS UNSIGNED) >= 20 AND CAST(a.age AS UNSIGNED) < 25 THEN '20-24'
+        WHEN CAST(a.age AS UNSIGNED) >= 25 AND CAST(a.age AS UNSIGNED) < 30 THEN '25-29'
+        WHEN CAST(a.age AS UNSIGNED) >= 30 AND CAST(a.age AS UNSIGNED) < 35 THEN '30-34'
+        WHEN CAST(a.age AS UNSIGNED) >= 35 AND CAST(a.age AS UNSIGNED) < 40 THEN '35-29'
+        WHEN CAST(a.age AS UNSIGNED) >= 40 AND CAST(a.age AS UNSIGNED) < 45 THEN '40-44'
+        WHEN CAST(a.age AS UNSIGNED) >= 45 AND CAST(a.age AS UNSIGNED) < 50 THEN '45-49'
+        WHEN CAST(a.age AS UNSIGNED) >= 50 AND CAST(a.age AS UNSIGNED) < 55 THEN '50-54'
+	END AS `age_cohort`,
+    CASE 
+		WHEN a.race = '1' AND (hispanic_origin = '0' OR hispanic_origin = '9') THEN 'White, Non-Hispanic'
+        WHEN a.race = '1' AND hispanic_origin != '0' AND hispanic_origin != '9' THEN 'Hispanic'
 		WHEN a.race = '2' THEN 'Black'
         WHEN a.race = '3' THEN 'American Indian/Alaskan Native'
         WHEN a.race = '4' THEN 'Asian/Pacific Islander' 
@@ -76,6 +88,30 @@ SELECT
             AND a.prev_preterm_birth = 'N' THEN 1
         ELSE 0
 	END AS `no_riskfactors_reported`,
+    (CASE
+		WHEN a.prepregnancy_diabetes = 'Y' THEN 1
+		ELSE 0
+	END +
+	CASE
+		WHEN a.gestational_diabetes = 'Y' THEN 1
+		ELSE 0
+	END +
+	CASE
+		WHEN a.prepregnancy_hypertension = 'Y' THEN 1
+		ELSE 0
+	END +
+	CASE
+		WHEN a.gestational_hypertension = 'Y' THEN 1
+		ELSE 0
+	END +
+	CASE
+		WHEN a.hypertension_eclampsia = 'Y' THEN 1
+		ELSE 0
+	END +
+	CASE
+		WHEN a.prev_preterm_birth = 'Y' THEN 1
+		ELSE 0
+	END) AS `total_riskfactors_reported`,
     CASE
 		WHEN a.prev_cesarean = 'Y' THEN 1
         ELSE 0
@@ -119,6 +155,26 @@ SELECT
             AND a.admit_intensive_care = 'N' THEN 1
         ELSE 0
 	END AS `no_morbidity_reported`,
+    (CASE
+		WHEN a.maternal_transfusion = 'Y' THEN 1
+		ELSE 0
+	END +
+	CASE
+		WHEN a.perineal_laceration = 'Y' THEN 1
+		ELSE 0
+	END +
+	CASE
+		WHEN a.ruptured_uterus = 'Y' THEN 1
+		ELSE 0
+	END +
+	CASE
+		WHEN a.unplanned_hysterectomy = 'Y' THEN 1
+		ELSE 0
+	END +
+	CASE
+		WHEN a.admit_intensive_care = 'Y' THEN 1
+		ELSE 0
+	END) AS `total_morbidity_reported`,
     CASE
 		WHEN a.gestation_period = '01' THEN 20
 		WHEN a.gestation_period = '02' THEN 23.5

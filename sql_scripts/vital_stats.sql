@@ -127,7 +127,7 @@ SET delivery_year = TRIM(SUBSTR(@row,15,18)), #DOB_YY
     gestation_period = TRIM(SUBSTR(@row,453,454)) #GESTREC10
 ;
 
-SELECT * FROM maternity WHERE maternity.delivery_year = "2009" AND CAST(maternity.delivery_time AS UNSIGNED) > 10;
+SELECT COUNT(*) FROM maternity WHERE CAST(maternity.delivery_time AS UNSIGNED) > 10;
 
 # Import 2009-2016 mortality data into tables
 LOAD DATA LOCAL INFILE 
@@ -147,3 +147,9 @@ SET year = TRIM(SUBSTR(@row,102,105)),
 
 SELECT * FROM mortality WHERE mortality.cause_of_death = '352';
 
+
+#RANDOM SAMPLING OF MATERNITY AND MORTALITY TABLES
+
+SELECT * FROM maternity WHERE CAST(maternity.delivery_time AS UNSIGNED) > 10 ORDER BY RAND() LIMIT 280000;
+
+SELECT * FROM mortality WHERE CAST(cause_of_death AS UNSIGNED) >= 340 AND CAST(cause_of_death AS UNSIGNED) < 356;

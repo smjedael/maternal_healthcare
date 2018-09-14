@@ -14,9 +14,20 @@ SELECT
         WHEN a.education = '8' THEN 'Doctorate/Professional Degree'
         WHEN a.education = '9' THEN 'Unknown'
 	END AS `education`,
-    a.age,
     CASE 
-		WHEN a.race = '1' THEN 'White'
+		WHEN age = '08' THEN '10-14'
+        WHEN age = '09' THEN '15-19'
+        WHEN age = '10' THEN '20-24'
+        WHEN age = '11' THEN '25-29'
+        WHEN age = '12' THEN '30-34'
+        WHEN age = '13' THEN '35-29'
+        WHEN age = '14' THEN '40-44'
+        WHEN age = '15' THEN '45-49'
+        WHEN age = '16' THEN '50-54'
+	END AS `age_cohort`,
+    CASE 
+		WHEN a.race = '1' AND CAST(a.hispanic_origin AS UNSIGNED) > 5 THEN 'White, Non-Hispanic'
+        WHEN a.race = '1' AND CAST(a.hispanic_origin AS UNSIGNED) <= 5 THEN 'Hispanic'
 		WHEN a.race = '2' THEN 'Black'
         WHEN a.race = '3' THEN 'American Indian/Alaskan Native'
         WHEN a.race = '4' THEN 'Asian/Pacific Islander' 
