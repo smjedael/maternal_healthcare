@@ -40,7 +40,8 @@ FROM (SELECT
 	) AS `summary_id`,
 	year,
     CASE 
-		WHEN race = '1' THEN 'White'
+		WHEN race = '1' AND CAST(hispanic_origin AS UNSIGNED) > 5 THEN 'White, Non-Hispanic'
+        WHEN race = '1' AND CAST(hispanic_origin AS UNSIGNED) <= 5 THEN 'Hispanic'
 		WHEN race = '2' THEN 'Black'
         WHEN race = '3' THEN 'American Indian/Alaskan Native'
         WHEN race = '4' THEN 'Asian/Pacific Islander' 

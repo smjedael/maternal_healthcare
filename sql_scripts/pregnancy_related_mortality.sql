@@ -33,6 +33,26 @@ SELECT
         WHEN a.race = '4' THEN 'Asian/Pacific Islander' 
 	END AS `race`,
     CASE
+		WHEN a.race = '1' AND CAST(a.hispanic_origin AS UNSIGNED) > 5 THEN 1
+        ELSE 0
+	END AS `race_white_nh`,
+    CASE
+		WHEN a.race = '1' AND CAST(a.hispanic_origin AS UNSIGNED) <= 5 THEN 1
+        ELSE 0
+	END AS `race_hispanic`,
+    CASE
+		WHEN a.race = '2' THEN 1
+        ELSE 0
+	END AS `race_black`,
+    CASE
+		WHEN a.race = '3' THEN 1
+        ELSE 0
+	END AS `race_ai_an`,
+    CASE
+		WHEN a.race = '4' THEN 1
+        ELSE 0
+	END AS `race_asian_pi`,
+    CASE
 		WHEN CAST(a.hispanic_origin AS UNSIGNED) > 5 THEN 'Non-Hispanic'
         ELSE 'Hispanic'
     END AS `hispanic`,
@@ -50,6 +70,7 @@ SELECT
         WHEN cause_of_death = '353' THEN 'Obstetric Unspecified'
         WHEN cause_of_death = '354' THEN 'Other Pregnancy Related'
         WHEN cause_of_death = '355' THEN 'Indirect Obstetric'
-	END AS `cause_of_death`
+	END AS `cause_of_death`,
+    1 AS `pregnancy_related_death`
 FROM     
 	(SELECT * FROM mortality WHERE CAST(cause_of_death AS UNSIGNED) >= 340 AND CAST(cause_of_death AS UNSIGNED) < 356) AS a;

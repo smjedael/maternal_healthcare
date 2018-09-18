@@ -31,6 +31,26 @@ SELECT
         WHEN a.race = '4' THEN 'Asian/Pacific Islander' 
 	END AS `race`,
     CASE
+		WHEN a.race = '1' AND (hispanic_origin = '0' OR hispanic_origin = '9') THEN 1
+        ELSE 0
+	END AS `race_white_nh`,
+    CASE
+		WHEN a.race = '1' AND hispanic_origin != '0' AND hispanic_origin != '9' THEN 1
+        ELSE 0
+	END AS `race_hispanic`,
+    CASE
+		WHEN a.race = '2' THEN 1
+        ELSE 0
+	END AS `race_black`,
+    CASE
+		WHEN a.race = '3' THEN 1
+        ELSE 0
+	END AS `race_ai_an`,
+    CASE
+		WHEN a.race = '4' THEN 1
+        ELSE 0
+	END AS `race_asian_pi`,
+    CASE
 		WHEN hispanic_origin = '0' OR hispanic_origin = '9' THEN 'Non-Hispanic'
         ELSE 'Hispanic'
     END AS `hispanic`,
