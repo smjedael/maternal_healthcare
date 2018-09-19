@@ -1,0 +1,98 @@
+body {
+  background-color: rgb(161, 161, 161);
+  padding-top:50px;
+}
+
+h1 {
+    color: #294694;
+    font-family: Georgia, 'Times New Roman', Times;
+    font-weight: bold; 
+}
+
+h2 {
+    color: #294694;
+    font-family: Georgia, 'Times New Roman', Times;
+    font-weight: bold; 
+}
+
+h3 {
+    color: #294694;
+    font-family: Georgia, 'Times New Roman', Times;
+    font-weight: bold; 
+}
+
+p {
+    color: rgb(100, 100, 100);
+    line-height: 1.8;
+}
+
+table {
+    width: 100%;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.navbar {
+    background: #fff
+}
+
+.navbar-brand {
+    background-color: #294694;
+    color: #fff;
+    width: 160px;
+}
+
+.icon-bar {
+    color: #fff;
+    background-color: #fff;
+}
+
+/* Getting rid of the default link styles here */
+ .nav-item {
+    text-decoration: none;
+    color: #6c757d;
+  }
+
+.navbar-nav a {
+    text-decoration: none;
+    color: #6c757d; 
+}
+
+.navbar-nav a:hover {
+    text-decoration: underline;
+    color: #6c757d; 
+}
+
+.dropdown-item {
+    text-decoration: none;
+    padding:10px;
+    color: #6c757d;
+}
+
+.vizbar img {
+    padding: 10px;
+    width: 145px;
+    height: 145px;
+}
+
+#vizbar-active {
+    border:2px solid  #294694;
+}
+
+.vizcomparison h3 {
+    text-align: center
+}
+
+.vizcomparison img {
+    padding: 10px;
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        background: #294694;
+    }
+}
