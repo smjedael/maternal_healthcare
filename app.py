@@ -98,24 +98,23 @@ def data_page():
     return render_template("data.html")
 
 
-@app.route("/regression/<dataframe>/<predictors>/<response>")
+@app.route("/regression/mrs/<predictors>/<response>")
 # Need to look into being able to filter the table
-def perform_regression(dataframe, predictors, response):
+def perform_regression(predictors, response):
     # Perform Multivariate Regression
     scale = StandardScaler()
-    df = dataframe
-
+        
     # Here we have 2 variables for multiple regression. If you just want to use one variable for simple linear regression,
     #then use X = df['Interest_Rate'] for example. Alternatively, you may add additional variables within the brackets.
-
+    
     column_list = predictors.split('&')
 
-    X = df[column_list]
-    Y = df[response]
+    X = df_mrs[column_list]
+    Y = df_mrs[response]
 
     X[column_list] = scale.fit_transform(X[column_list].as_matrix())
 
-    est = sm.OLS(Y, X).fit()
+    est = sm.OLS(Y, sm.add_constant(X)).fit()
 
     regression_results = {}
     regression_results['Dep. Variable'] = response
@@ -164,11 +163,11 @@ def perform_regression(dataframe, predictors, response):
     return jsonify(regression_results)
 
 
-@app.route("/plots/scatter/<dataframe>/<xValue>/<yValue>/<xAxisLabel>/<yAxisLabel>")
-def plt_scatter(dataframe, xValue, yValue, xAxisLabel, yAxisLabel):
-    df = dataframe
-    results = {}
-    return jsonify(results)
+#@app.route("/plots/scatter/<dataframe>/<xValue>/<yValue>/<xAxisLabel>/<yAxisLabel>")
+#def plt_scatter(dataframe, xValue, yValue, xAxisLabel, yAxisLabel):
+#    df = dataframe
+#    results = {}
+#    return jsonify(results)
 
 
 if __name__ == "__main__":
