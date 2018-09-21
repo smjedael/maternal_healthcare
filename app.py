@@ -31,22 +31,26 @@ Base = automap_base()
 # reflect the tables
 Base.prepare(db.engine, reflect=True)
 
+#################################################
+# Dataframe Setup
+#################################################
+
 # Save references to each table
-tbl_prm = Base.classes.pregnancy_related_mortality
-tbl_ms = Base.classes.maternity_summary
+tbl_mma = Base.classes.maternal_mortality_all
 tbl_mms = Base.classes.maternal_mortality_summary
 tbl_mrs = Base.classes.maternity_random_sample
+tbl_ms = Base.classes.maternity_summary
 tbl_ufcs = Base.classes.us_female_census_summary
 
 # Create dataframes for each table
-stmt = db.session.query(tbl_prm).statement
-df_prm = pd.read_sql_query(stmt, db.session.bind)
-
-stmt = db.session.query(tbl_ms).statement
-df_ms = pd.read_sql_query(stmt, db.session.bind)
+stmt = db.session.query(tbl_mma).statement
+df_mma = pd.read_sql_query(stmt, db.session.bind)
 
 stmt = db.session.query(tbl_mms).statement
 df_mms = pd.read_sql_query(stmt, db.session.bind)
+
+stmt = db.session.query(tbl_ms).statement
+df_ms = pd.read_sql_query(stmt, db.session.bind)
 
 stmt = db.session.query(tbl_mrs).statement
 df_mrs = pd.read_sql_query(stmt, db.session.bind)
@@ -54,8 +58,59 @@ df_mrs = pd.read_sql_query(stmt, db.session.bind)
 stmt = db.session.query(tbl_ufcs).statement
 df_ufcs = pd.read_sql_query(stmt, db.session.bind)
 
+# Rebuild df_ufcs table
+df_ufcs_white_nh = df_ufcs[['year', 'age_cohort', 'white_nh', ]]
+df_ufcs_hispanic = df_ufcs[['year', 'age_cohort', 'hispanic', ]]
+df_ufcs_black = df_ufcs[['year', 'age_cohort', 'black', ]]
+df_ufcs_ai_an = df_ufcs[['year', 'age_cohort', 'ai_an', ]]
+df_ufcs_asian_pi = df_ufcs[['year', 'age_cohort', 'asian_pi', ]]
+
+df_ufcs_white_nh.rename(columns={'white_nh': 'female_pop'}, inplace=True)
+df_ufcs_hispanic.rename(columns={'hispanic': 'female_pop'}, inplace=True)
+df_ufcs_black.rename(columns={'black': 'female_pop'}, inplace=True)
+df_ufcs_ai_an.rename(columns={'ai_an': 'female_pop'}, inplace=True)
+df_ufcs_asian_pi.rename(columns={'asian_pi': 'female_pop'}, inplace=True)
+
+df_ufcs_white_nh['race'] = 'White, Non-Hispanic'
+df_ufcs_hispanic['race'] = 'Hispanic'
+df_ufcs_black['race'] = 'Black'
+df_ufcs_ai_an['race'] = 'American Indian/Alaskan Native'
+df_ufcs_asian_pi['race'] = 'Asian/Pacific Islander'
+
+df_ufcs_new = df_ufcs_hispanic.append(df_ufcs_white_nh)
+df_ufcs_new = df_ufcs_new.append(df_ufcs_black)
+df_ufcs_new = df_ufcs_new.append(df_ufcs_ai_an)
+df_ufcs_new = df_ufcs_new.append(df_ufcs_asian_pi)
+
+# Merge rebuilt df_ufcs_new table to df_ms and df_mms
+
+df_master = pd.merge(df_ufcs_new, df_ms, on=[
+                     'year', 'race', 'age_cohort'], how='left')
+df_master = pd.merge(df_master, df_mms, on=[
+                     'year', 'race', 'age_cohort'], how='left')
+
+# Scrap temporary dataframes
+del df_ufcs_white_nh
+del df_ufcs_hispanic
+del df_ufcs_black
+del df_ufcs_ai_an
+del df_ufcs_asian_pi
+del df_ufcs_new
+
+###################################################
+# Other Global Variables
+###################################################
+
+races = ('American Indian/Alaskan Native', 
+        'Asian/Pacific Islander', 'Black', 
+        'Hispanic', 'White, Non-Hispanic')
 
 
+###################################################
+# Route Setup
+###################################################
+
+# Standard webpage routes
 @app.route("/")
 def index():
     """Return the homepage."""
@@ -97,10 +152,10 @@ def data_page():
     """Return the Data page."""
     return render_template("data.html")
 
-
+# Special Function Routes
 @app.route("/regression/mrs/<predictors>/<response>")
 # Need to look into being able to filter the table
-def perform_regression(predictors, response):
+def performRegression(predictors, response):
     # Perform Multivariate Regression
     scale = StandardScaler()
         
@@ -163,11 +218,22 @@ def perform_regression(predictors, response):
     return jsonify(regression_results)
 
 
-#@app.route("/plots/scatter/<dataframe>/<xValue>/<yValue>/<xAxisLabel>/<yAxisLabel>")
-#def plt_scatter(dataframe, xValue, yValue, xAxisLabel, yAxisLabel):
-#    df = dataframe
-#    results = {}
-#    return jsonify(results)
+@app.route("/plots/race/groupbar/<factor>")
+def groupBarData(factor):
+    chart_data = []
+    df_group = df_master.groupby([df_master.race, df_master.year])
+    
+    dv = np.around((df_group[factor].sum()/df_group['total_births'].sum())*10000, 2)
+    
+    for race in races:
+        trace = {'x':dv[race].index.tolist(),
+                 'y':dv[race].tolist(),
+                 'name':race,
+                 'type':'bar'
+                }
+        chart_data.append(trace)
+
+    return jsonify(chart_data)
 
 
 if __name__ == "__main__":

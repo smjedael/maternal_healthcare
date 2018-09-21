@@ -6,20 +6,17 @@ SELECT
     a.race,
     a.hispanic,
     a.age_cohort,
-    a.ectopic_pregnancy_count,
-    a.spontaneous_abortion_count,
-    a.medical_abortion_count,
-    a.other_abortion_count,
-    a.other_abortive_outcome_count,
-    a.eclampsia_preeclampsia_count,
-    a.hemorrhage_count,
-    a.obstetric_embolism_count,
-    a.other_puerperium_complications_count,
-    a.all_other_direct_obstetric_count,
-    a.obstetric_unspecified_count,
+    a.total_maternal_deaths,
+    a.direct_obstetric_abortive_count,
+    a.direct_obstetric_nonabortive_count,
+    a.direct_obstetric_unspecified_count,
     a.other_pregnancy_related_count,
     a.indirect_obstetric_count,
-    a.total_pregnancy_deaths
+    a.don_eclampsia_preeclampsia_count,
+    a.don_hemorrhage_count,
+    a.don_puerperium_embolism_count,
+    a.don_puerperium_other_count,
+    a.don_all_other_count
     
 # Query 'a' - Base Query
 FROM (SELECT
@@ -61,21 +58,18 @@ FROM (SELECT
         WHEN age = '15' THEN '45-49'
         WHEN age = '16' THEN '50-54'
 	END AS `age_cohort`,
-    SUM(CASE WHEN cause_of_death = '341' THEN 1 ELSE 0 END) AS `ectopic_pregnancy_count`,
-    SUM(CASE WHEN cause_of_death = '342' THEN 1 ELSE 0 END) AS `spontaneous_abortion_count`,
-    SUM(CASE WHEN cause_of_death = '343' THEN 1 ELSE 0 END) AS `medical_abortion_count`,
-    SUM(CASE WHEN cause_of_death = '344' THEN 1 ELSE 0 END) AS `other_abortion_count`,
-    SUM(CASE WHEN cause_of_death = '345' THEN 1 ELSE 0 END) AS `other_abortive_outcome_count`,
-    SUM(CASE WHEN cause_of_death = '347' THEN 1 ELSE 0 END) AS `eclampsia_preeclampsia_count`,
-    SUM(CASE WHEN cause_of_death = '348' THEN 1 ELSE 0 END) AS `hemorrhage_count`,
-    SUM(CASE WHEN cause_of_death = '350' THEN 1 ELSE 0 END) AS `obstetric_embolism_count`,
-    SUM(CASE WHEN cause_of_death = '351' THEN 1 ELSE 0 END) AS `other_puerperium_complications_count`,
-    SUM(CASE WHEN cause_of_death = '352' THEN 1 ELSE 0 END) AS `all_other_direct_obstetric_count`,
-    SUM(CASE WHEN cause_of_death = '353' THEN 1 ELSE 0 END) AS `obstetric_unspecified_count`,
+    SUM(CASE WHEN CAST(cause_of_death AS UNSIGNED) >= 340 AND CAST(cause_of_death AS UNSIGNED) <356 THEN 1 ELSE 0 END) AS `total_maternal_deaths`,
+    SUM(CASE WHEN CAST(cause_of_death AS UNSIGNED) >= 340 AND CAST(cause_of_death AS UNSIGNED) < 346 THEN 1 ELSE 0 END) AS `direct_obstetric_abortive_count`,
+	SUM(CASE WHEN CAST(cause_of_death AS UNSIGNED) >= 346 AND CAST(cause_of_death AS UNSIGNED) < 353 THEN 1 ELSE 0 END) AS `direct_obstetric_nonabortive_count`,
+    SUM(CASE WHEN cause_of_death = '353' THEN 1 ELSE 0 END) AS `direct_obstetric_unspecified_count`,
     SUM(CASE WHEN cause_of_death = '354' THEN 1 ELSE 0 END) AS `other_pregnancy_related_count`,
-    SUM(CASE WHEN cause_of_death = '355' THEN 1 ELSE 0 END) AS `indirect_obstetric_count`,
-    SUM(CASE WHEN CAST(cause_of_death AS UNSIGNED) >= 340 AND CAST(cause_of_death AS UNSIGNED) <356 THEN 1 ELSE 0 END) AS `total_pregnancy_deaths`,
-    COUNT(year) AS `total_deaths`
+	SUM(CASE WHEN cause_of_death = '355' THEN 1 ELSE 0 END) AS `indirect_obstetric_count`,
+    SUM(CASE WHEN cause_of_death = '347' THEN 1 ELSE 0 END) AS `don_eclampsia_preeclampsia_count`,
+    SUM(CASE WHEN cause_of_death = '348' THEN 1 ELSE 0 END) AS `don_hemorrhage_count`,
+    SUM(CASE WHEN cause_of_death = '350' THEN 1 ELSE 0 END) AS `don_puerperium_embolism_count`,
+    SUM(CASE WHEN cause_of_death = '351' THEN 1 ELSE 0 END) AS `don_puerperium_other_count`,
+    SUM(CASE WHEN cause_of_death = '352' THEN 1 ELSE 0 END) AS `don_all_other_count`
+    
 FROM mortality
 WHERE sex = 'F'
 AND CAST(age AS UNSIGNED) >= 8

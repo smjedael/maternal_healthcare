@@ -2,11 +2,11 @@ USE vital_stats_db;
 
 SELECT
 	a.summary_id,
-    a.delivery_year,
+    a.delivery_year AS `year`,
     a.race,
     a.hispanic,
     a.age_cohort,
-    a.population,
+    a.population AS `total_births`,
     b.avg_prenatal_care_start_month,
     c.avg_num_prenatal_visits,
     d.avg_body_mass_index,

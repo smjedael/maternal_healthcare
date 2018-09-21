@@ -11,7 +11,7 @@ SELECT
         WHEN age >= 20 AND age < 25 THEN '20-24'
         WHEN age >= 25 AND age < 30 THEN '25-29'
         WHEN age >= 30 AND age < 35 THEN '30-34'
-        WHEN age >= 35 AND age < 40 THEN '35-29'
+        WHEN age >= 35 AND age < 40 THEN '35-39'
         WHEN age >= 40 AND age < 45 THEN '40-44'
         WHEN age >= 45 AND age < 50 THEN '45-49'
         WHEN age >= 50 AND age < 55 THEN '50-54'
