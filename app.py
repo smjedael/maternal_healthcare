@@ -129,10 +129,10 @@ def comp_matmortality_page():
     return render_template("comp-matmortality.html")
 
 
-@app.route("/regression/")
+@app.route("/regr-matmortality/")
 def regression_page():
     """Return the Regression Analysis page."""
-    return render_template("regression.html")
+    return render_template("regr-matmortality.html")
 
 
 @app.route("/data/")

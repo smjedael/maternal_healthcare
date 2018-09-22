@@ -32,3 +32,30 @@ const summaryColumns = {
     "don_all_other_count":"DON: All Other",
     "total_maternal_deaths":"Total Maternal Deaths"
 };
+
+const regrColumns = {
+    "race_white_nh":"White, Non-Hispanic",
+    "race_hispanic":"Hispanic",
+    "race_black":"Black",
+    "race_ai_an":"American Indian/Alaskan Native",
+    "race_asian_pi":"Asian/Pacific Islander",
+    "prepregnancy_diabetes":"Prepregnancy Diabetes",
+    "gestational_diabetes":"Gestational Diabetes",
+    "prepregnancy_hypertension":"Prepregnancy Hypertension",
+    "gestational_hypertension":"Gestational Hypertension",
+    "hypertension_eclampsia":"Hypertension Eclampsia",
+    "prev_preterm_birth":"Previous Preterm Birth",
+    "no_infections_reported":"No Infections Reported",
+    "no_riskfactors_reported":"No Risk Factors Reported",
+    "total_riskfactors_reported":"Total Risk Factors Reported",
+    "delivery_cesarean":"Cesarean Delivery",
+    "prev_cesarean":"Previous Cesarean",
+    "num_prev_cesareans":"Number of Previous Cesareans",
+    "maternal_transfusion":"Maternal Transfusion",
+    "perineal_laceration":"Perineal Laceration",
+    "ruptured_uterus":"Ruptured Uterus",
+    "unplanned_hysterectomy":"Unplanned Hysterectomy",
+    "admit_intensive_care":"Admitted to Intensive Care",
+    "no_morbidity_reported":"No Morbidity Reported",
+    "total_morbidity_reported":"Total Morbidity Reported"
+};

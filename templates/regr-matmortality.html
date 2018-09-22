@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+    <meta charset="UTF-8">
+    <title>HERA - Regression</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/styles.css">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-dark navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header" style="padding:0px">
+                    <a class="navbar-brand" style="background-color: #294694;font-family: Georgia, 'Times New Roman', Times, serif; margin-left: 15%; color:#fff;"
+                        href="/">
+                        <b>project <i>HERA</i></b>
+                    </a>
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbarTogglerMenu" aria-controls="navbarTogglerMenu"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarTogglerMenu" style="background-color: #fff;">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="#" id="navbarDrop" data-toggle="dropdown">
+                                Plots
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="/plt-matmortality/">Maternal Morbidity/Mortality</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="#" id="navbarDrop" data-toggle="dropdown">
+                                Comparisons by Race
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="/comp-matmortality/">Maternal Morbidity/Mortality</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="#" id="navbarDrop" data-toggle="dropdown">
+                                Regression Analysis
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="/regr-matmortality/">Maternal Morbidity/Mortality</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/data/">Data</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            
+            <div class="row" style="padding-top:50px;">
+                <div class="col-sm-12 col-md-12" style="padding-bottom:20px;">
+                    <div style="background-color: #fff; padding:30px;">
+                        <h1>Maternal Morbidity/Mortality</h1>
+                        <h2 style="color:#6c757d">Regression Analysis</h2>
+                        <hr>
+                        <div class="custom-select">
+                            <form>
+                                Parameters:
+                                <select name="selParameters" class="custom-select custom_select mb-3" id="parameters">
+                                    <option selected>CTRL-Click for Multi-Select</option>
+                                    <option value="race_white_nh">White, Non-Hispanic - Race</option>
+                                    <option value="race_hispanic">Hispanic - Race</option>
+                                    <option value="race_black">Black - Race</option>
+                                    <option value="race_ai_an">American Indian/Alaskan Native - Race</option>
+                                    <option value="race_asian_pi">Asian/Pacific Islander - Race</option>
+                                    <option value="prepregnancy_diabetes">Prepregnancy Diabetes - Risk Factor</option>
+                                    <option value="gestational_diabetes">Gestational Diabetes - Risk Factor</option>
+                                    <option value="prepregnancy_hypertension">Prepregnancy Hypertension - Risk Factor</option>
+                                    <option value="gestational_hypertension">Gestational Hypertension - Risk Factor</option>
+                                    <option value="hypertension_eclampsia">Hypertension Eclampsia - Risk Factor</option>
+                                    <option value="prev_preterm_birth">Previous Preterm Birth - Risk Factor</option>
+                                    <option value="no_infections_reported">No Infections Reported - Risk Factor</option>
+                                    <option value="no_riskfactors_reported">No Risk Factors Reported - Risk Factor</option>
+                                    <option value="total_riskfactors_reported">Total Risk Factors Reported - Risk Factor</option>
+                                    <option value="delivery_cesarean">Cesarean Delivery - Delivery Method</option>
+                                    <option value="prev_cesarean">Previous Cesarean - Delivery Method</option>
+                                    <option value="num_prev_cesareans">Number of Previous Cesareans - Delivery Method</option>
+                                    <option value="maternal_transfusion">Maternal Transfusion - Morbidity</option>
+                                    <option value="perineal_laceration">Perineal Laceration - Morbidity</option>
+                                    <option value="ruptured_uterus">Ruptured Uterus - Morbidity</option>
+                                    <option value="unplanned_hysterectomy">Unplanned Hysterectomy - Morbidity</option>
+                                    <option value="admit_intensive_care">Admitted to Intensive Care - Morbidity</option>
+                                    <option value="no_morbidity_reported">No Morbidity Reported - Morbidity</option>
+                                    <option value="total_morbidity_reported">Total Morbidity Reported - Morbidity</option>
+                                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                Response:
+                                <select name="selResponse" class="custom-select custom_select mb-3" id="response">
+                                    <option selected>Select One</option>
+                                    <option value="race_white_nh">White, Non-Hispanic - Race</option>
+                                    <option value="race_hispanic">Hispanic - Race</option>
+                                    <option value="race_black">Black - Race</option>
+                                    <option value="race_ai_an">American Indian/Alaskan Native - Race</option>
+                                    <option value="race_asian_pi">Asian/Pacific Islander - Race</option>
+                                    <option value="prepregnancy_diabetes">Prepregnancy Diabetes - Risk Factor</option>
+                                    <option value="gestational_diabetes">Gestational Diabetes - Risk Factor</option>
+                                    <option value="prepregnancy_hypertension">Prepregnancy Hypertension - Risk Factor</option>
+                                    <option value="gestational_hypertension">Gestational Hypertension - Risk Factor</option>
+                                    <option value="hypertension_eclampsia">Hypertension Eclampsia - Risk Factor</option>
+                                    <option value="prev_preterm_birth">Previous Preterm Birth - Risk Factor</option>
+                                    <option value="no_infections_reported">No Infections Reported - Risk Factor</option>
+                                    <option value="no_riskfactors_reported">No Risk Factors Reported - Risk Factor</option>
+                                    <option value="total_riskfactors_reported">Total Risk Factors Reported - Risk Factor</option>
+                                    <option value="delivery_cesarean">Cesarean Delivery - Delivery Method</option>
+                                    <option value="prev_cesarean">Previous Cesarean - Delivery Method</option>
+                                    <option value="num_prev_cesareans">Number of Previous Cesareans - Delivery Method</option>
+                                    <option value="maternal_transfusion">Maternal Transfusion - Morbidity</option>
+                                    <option value="perineal_laceration">Perineal Laceration - Morbidity</option>
+                                    <option value="ruptured_uterus">Ruptured Uterus - Morbidity</option>
+                                    <option value="unplanned_hysterectomy">Unplanned Hysterectomy - Morbidity</option>
+                                    <option value="admit_intensive_care">Admitted to Intensive Care - Morbidity</option>
+                                    <option value="no_morbidity_reported">No Morbidity Reported - Morbidity</option>
+                                    <option value="total_morbidity_reported">Total Morbidity Reported - Morbidity</option>
+                                </select><br><br>
+                                Model:
+                                <select name="model" class="custom-select custom_select mb-3" id="regrModel">
+                                    <option selected>Regression Model</option>
+                                    <option value="OLS">OLS - Linear Regression</option>
+                                    <option value="logistic">Logistic Regression</option>
+                                </select><br><br>
+                                <button id="regrButton" type="submit" class="btn btn-default">Calculate</button>
+                            </form><br><br>
+                        </div>
+                        <div>
+                            <table id="regrTable">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2"><b>Dep. Variable:</b></td>
+                                        <td colspan="2" id="Dep. Variable"></td>
+                                        <td colspan="2"><b>R-Squared:</b></td>
+                                        <td colspan="2" id="R-Squared"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Model:</b></td>
+                                        <td colspan="2" id="Model"></td>
+                                        <td colspan="2"><b>Adj. R-Squared:</b></td>
+                                        <td colspan="2" id="Adj. R-Squared"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Method:</b></td>
+                                        <td colspan="2" id="Method"></td>
+                                        <td colspan="2"><b>F-statistic:</b></td>
+                                        <td colspan="2" id="F-statistic"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Date:</b></td>
+                                        <td colspan="2" id="Date"></td>
+                                        <td colspan="2"><b>Prob (F-statistic):</b></td>
+                                        <td colspan="2" id="Prob (F-statistic)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Time:</b></td>
+                                        <td colspan="2" id="Time"></td>
+                                        <td colspan="2"><b>Log-Likelihood:</b></td>
+                                        <td colspan="2" id="Log-Likelihood"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>No. Observations:</b></td>
+                                        <td colspan="2" id="No. Observations"></td>
+                                        <td colspan="2"><b>AIC:</b></td>
+                                        <td colspan="2" id="AIC"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Df Residuals:</b></td>
+                                        <td colspan="2" id="Df Residuals"></td>
+                                        <td colspan="2"><b>BIC:</b></td>
+                                        <td colspan="2" id="BIC"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Df Model:</b></td>
+                                        <td colspan="2" id="Df Model"></td>
+                                        <td colspan="2"><b>Covariance Type:</b></td>
+                                        <td colspan="2" id="Covariance Type"></td>
+                                    </tr>
+                                    <tr><td colspan="8">&nbsp;</td></tr>
+                                    <tr>
+                                        <td><b>Parameters</b></td>
+                                        <td><b>Coefficient</b></td>
+                                        <td><b>Standard Error</b></td>
+                                        <td><b>t-value</b></td>
+                                        <td><b>p-value</b></td>
+                                        <td><b>[0.025</b></td>
+                                        <td><b>0.975]</b></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+
+        <div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="/static/js/regressions.js"></script>
+        <script src="/static/js/data_objects.js"></script>
+    </body>
+</html>
