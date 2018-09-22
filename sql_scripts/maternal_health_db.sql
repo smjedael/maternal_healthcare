@@ -190,4 +190,4 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-SELECT * FROM us_female_census_summary;
+SELECT * FROM maternity_summary;

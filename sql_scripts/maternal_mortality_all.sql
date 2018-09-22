@@ -20,7 +20,7 @@ SELECT
         WHEN age = '10' THEN '20-24'
         WHEN age = '11' THEN '25-29'
         WHEN age = '12' THEN '30-34'
-        WHEN age = '13' THEN '35-29'
+        WHEN age = '13' THEN '35-39'
         WHEN age = '14' THEN '40-44'
         WHEN age = '15' THEN '45-49'
         WHEN age = '16' THEN '50-54'

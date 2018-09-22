@@ -117,22 +117,10 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/plt-matmorbidity/")
-def plt_matmorbidity_page():
-    """Return the Plot - Maternal Morbidity page."""
-    return render_template("plt-matmorbidity.html")
-
-
 @app.route("/plt-matmortality/")
 def plt_matmortality_page():
     """Return the Plot - Maternal Mortality page."""
     return render_template("plt-matmortality.html")
-
-
-@app.route("/comp-matmorbidity/")
-def comp_matmorbidity_page():
-    """Return the Comparison - Maternal Morbidity page."""
-    return render_template("comp-matmorbidity.html")
 
 
 @app.route("/comp-matmortality/")
@@ -217,6 +205,19 @@ def performRegression(predictors, response):
 
     return jsonify(regression_results)
 
+@app.route("/plots/scatter/<xvalue>/<yvalue>")
+def scatterData(xvalue,yvalue):
+    chart_data = []
+    dv = df_master[[xvalue,yvalue]].dropna()
+    trace = {'x':dv[xvalue].tolist(),
+             'y':dv[yvalue].tolist(),
+             'mode': 'markers',
+             'type': 'scatter'
+            }
+    chart_data.append(trace)
+
+    return jsonify(chart_data)
+
 
 @app.route("/plots/race/groupbar/<factor>")
 def groupBarData(factor):
@@ -235,6 +236,23 @@ def groupBarData(factor):
 
     return jsonify(chart_data)
 
+
+@app.route("/plots/race/pie/<factor>")
+def pieData(factor):
+    chart_data = {}
+    df_group = df_master.groupby([df_master.race, df_master.age_cohort])
+    dv = np.around(df_group[factor].sum(), 2)
+
+    for race in races:
+        trace = {'labels': dv[race].index.tolist(),
+                 'values': dv[race].tolist(),
+                 'type': 'pie',
+                 'sort': False,
+                 'direction': 'clockwise'
+                 }
+        chart_data[race] = [trace]
+
+    return jsonify(chart_data)
 
 if __name__ == "__main__":
     app.run()

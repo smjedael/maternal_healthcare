@@ -71,26 +71,6 @@ tr:nth-child(even) {
     color: #6c757d;
 }
 
-.vizbar img {
-    padding: 10px;
-    width: 145px;
-    height: 145px;
-}
-
-#vizbar-active {
-    border:2px solid  #294694;
-}
-
-.vizcomparison h3 {
-    text-align: center
-}
-
-.vizcomparison img {
-    padding: 10px;
-    max-width: 100%;
-    height: auto;
-}
-
 @media (max-width: 768px) {
     .navbar {
         background: #294694;

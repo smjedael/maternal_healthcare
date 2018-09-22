@@ -1,4 +1,7 @@
-const raceCompColumns = {
+const summaryColumns = {
+    "avg_prenatal_care_start_month": "Average Prenatal Care Start Month",
+    "avg_num_prenatal_visits": "Average Number of Prenatal Visits",
+    "avg_body_mass_index": "Average Body Mass Index",
     "prepregnancy_diabetes_count":"Prepregnancy Diabetes",
     "gestational_diabetes_count":"Gestational Diabetes",
     "prepregnancy_hypertension_count":"Prepregnancy Hypertension",
@@ -6,14 +9,17 @@ const raceCompColumns = {
     "hypertension_eclampsia_count":"Hypertension Eclampsia",
     "prev_preterm_birth_count":"Previous Preterm Birth",
     "total_risk_factors":"Total Risk Factors",
-    "total_prev_cesareans":"Total Previous Cesareans",
-    "total_delivery_vaginal":"Total Vaginal Deliveries",
+    "delivery_primary_cesarean_count":"Primary Cesarean",
+    "delivery_repeat_cesarean_count": "Repeat Cesarean",
+    "total_prev_cesareans": "Total Previous Cesareans",
     "total_delivery_cesarean":"Total Cesarean Deliveries",
+    "total_delivery_vaginal": "Total Vaginal Deliveries",
     "maternal_transfusion_count":"Maternal Transfusion",
     "perineal_laceration_count":"Perineal Laceration",
     "ruptured_uterus_count":"Ruptured Uterus",
     "unplanned_hysterectomy_count":"Unplanned Hysterectomy",
     "admit_intensive_care_count":"Admitted to Intensive Care",
+    "total_morbidity_count":"Total Morbidity Events",
     "direct_obstetric_abortive_count":"Direct Obstetric Abortive",
     "direct_obstetric_nonabortive_count":"Direct Obstetric Nonabortive",
     "direct_obstetric_unspecified_count":"Direct Obstetric Unspecified",
@@ -25,4 +31,4 @@ const raceCompColumns = {
     "don_puerperium_other_count":"DON: Puerperium Other",
     "don_all_other_count":"DON: All Other",
     "total_maternal_deaths":"Total Maternal Deaths"
-}
+};

@@ -6,7 +6,6 @@
     <title>HERA - Maternal Mortality</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/static/css/styles.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     </head>
 
     <body>
@@ -33,10 +32,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="/plt-matmorbidity/">Maternal Morbidity</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="/plt-matmortality/">Maternal Mortality</a>
+                                    <a class="dropdown-item" href="/plt-matmortality/">Maternal Morbidity/Mortality</a>
                                 </li>
                             </ul>
                         </li>
@@ -47,10 +43,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="/comp-matmorbidity/">Maternal Morbidity</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="/comp-matmortality/">Maternal Mortality</a>
+                                    <a class="dropdown-item" href="/comp-matmortality/">Maternal Morbidity/Mortality</a>
                                 </li>
                             </ul>
                         </li>
@@ -65,17 +58,16 @@
             </div>
         </nav>
         <div class="container">
-            
             <div class="row" style="padding-top:50px;">
-                <div class="col-sm-12 col-md-12" style="padding-bottom:20px;">
-                    <div style="background-color: #fff; padding:30px;">
+                <div class="col-sm-12 col-md-12" style="background-color: #fff;">
+                    <div style="padding-top:30px;padding-left:30px;padding-right:30px;">
                         <h1>Maternal Morbidity/Mortality</h1>
                         <h2 style="color:#6c757d">Comparisons by Race</h2>
                         <hr>
                         <div class="custom-select">
                             <form>
                                 Select from the following:
-                                <select name="cars" class="custom-select custom_select mb-3" id="selRiskFactor" onchange="getData(this.value)">
+                                <select name="selRiskFactor" class="custom-select custom_select mb-3" id="compRiskFactor" onchange="buildCompCharts(this.value)">
                                     <option selected>Risk Factor/Cause of Death</option>
                                     <option value="prepregnancy_diabetes_count">Prepregnancy Diabetes - Risk Factor</option>
                                     <option value="gestational_diabetes_count">Gestational Diabetes - Risk Factor</option>
@@ -84,14 +76,17 @@
                                     <option value="hypertension_eclampsia_count">Hypertension Eclampsia - Risk Factor</option>
                                     <option value="prev_preterm_birth_count">Previous Preterm Birth - Risk Factor</option>
                                     <option value="total_risk_factors">Total Risk Factors - Risk Factor</option>
+                                    <option value="delivery_primary_cesarean_count">Primary Cesarean - Delivery Method</option>
+                                    <option value="delivery_repeat_cesarean_count">Repeat Cesarean - Delivery Method</option>
                                     <option value="total_prev_cesareans">Total Previous Cesareans - Delivery Method</option>
-                                    <option value="total_delivery_vaginal">Total Vaginal Deliveries - Delivery Method</option>
                                     <option value="total_delivery_cesarean">Total Cesarean Deliveries - Delivery Method</option>
+                                    <option value="total_delivery_vaginal">Total Vaginal Deliveries - Delivery Method</option>
                                     <option value="maternal_transfusion_count">Maternal Transfusion - Morbidity</option>
                                     <option value="perineal_laceration_count">Perineal Laceration - Morbidity</option>
                                     <option value="ruptured_uterus_count">Ruptured Uterus - Morbidity</option>
                                     <option value="unplanned_hysterectomy_count">Unplanned Hysterectomy - Morbidity</option>
                                     <option value="admit_intensive_care_count">Admitted to Intensive Care - Morbidity</option>
+                                    <option value="total_morbidity_count">Total Morbidity Events - Morbidity</option>
                                     <option value="direct_obstetric_abortive_count">Direct Obstetric Abortive - Mortality</option>
                                     <option value="direct_obstetric_nonabortive_count">Direct Obstetric Nonabortive - Mortality</option>
                                     <option value="direct_obstetric_unspecified_count">Direct Obstetric Unspecified - Mortality</option>
@@ -108,18 +103,48 @@
                         </div>
                         <div id="groupBar1"></div>
                         <hr>
-                        <h3>Age Cohorts by Race</h3>
-                        
                     </div>  
                 </div>
             </div>
-
+            <div class="row" style="background-color: #fff;">
+                <div style="padding-left:30px;padding-right:30px;">
+                    <div class="col-sm-12 col-md-12">
+                        <h3>Age Cohorts by Race</h3>
+                        Percentages for each chart are based on all years.
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="background-color: #fff;">
+                <div style="padding-left:30px;padding-right:30px;">
+                    <div class="col-sm-6 col-md-4">
+                        <div id="pie0"></div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div id="pie1"></div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div id="pie2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="background-color: #fff;">
+                <div style="padding-left:30px;padding-right:30px;">
+                    <div class="col-sm-6 col-md-4">
+                        <div id="pie3"></div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div id="pie4"></div>
+                    </div>
+                </div>
+            </div>
         <div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
-        <script src="/static/js/plots.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         <script src="/static/js/data_objects.js"></script>
+        <script src="/static/js/plots.js"></script>
+        
     </body>
 </html>
