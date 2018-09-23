@@ -6,7 +6,7 @@ function populateTable(parameters, response, model) {
         var fields = Object.keys(data);
         var i;
 
-        // Populate standard fields first
+        // Populate table fields
         for (i=0;i<fields.length;i++) {
             if (document.getElementById(fields[i]) != null) {
                 document.getElementById(fields[i]).innerHTML = data[fields[i]];
@@ -14,7 +14,26 @@ function populateTable(parameters, response, model) {
             // Populate Dep. Variable field with proper name
             if (fields[i] == "Dep. Variable") {
                 document.getElementById(fields[i]).innerHTML = regrColumns[response];
-            }
+            };
+            if (fields[i] == "Parameters") {
+                // Remove any previously added parameters
+                d3.select("tbody")
+                .selectAll("tr.params")
+                .remove();
+
+                // Since this is an existing table add rows using a different class
+                d3.select("tbody")
+                    .selectAll("tr.params")
+                    .data(data[fields[i]])
+                    .enter()
+                    .append("tr")
+                    .attr('class', 'params')
+                    .html(function (d) {
+                        return `<td>${d.params}</td><td>${d.coef}</td><td>${d.std_err}</td>
+                            <td>${d.t_values}</td><td>${d.p_values}</td><td>${d.low_conf}</td>
+                            <td>${d.upp_conf}</td>`;
+                    });
+            };
             console.log(data[fields[i]]);
         };
     });

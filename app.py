@@ -159,6 +159,7 @@ def performRegression(predictors, response):
 
     est = sm.OLS(Y, sm.add_constant(X)).fit()
 
+    # Add standard fields to the dictionary
     regression_results = {}
     regression_results['Dep. Variable'] = response
     regression_results['Model'] = 'OLS'
@@ -177,6 +178,7 @@ def performRegression(predictors, response):
     regression_results['AIC'] = np.around(est.aic, 4)
     regression_results['BIC'] = np.around(est.bic, 4)
 
+    # Add custom parameters as array of dictionaries
     params = []
     coef = []
     std_err = []
@@ -185,23 +187,37 @@ def performRegression(predictors, response):
     low_conf = []
     upp_conf = []
     conf_int = est.conf_int().T
+    parameters = []
+
+    # OLDER VERSION
+    #for i in range(len(est.params)):
+    #    params.append(est.params.index[i])
+    #    coef.append(np.around(est.params[i], 4))
+    #    std_err.append(np.around(est.bse[i], 4))
+    #    t_values.append(np.around(est.tvalues[i], 4))
+    #    p_values.append(np.around(est.pvalues[i], 4))
+    #    low_conf.append(np.around(conf_int.iloc[0, i], 4))
+    #    upp_conf.append(np.around(conf_int.iloc[1, i], 4))
+    #regression_results['Parameters'] = params
+    #regression_results['Coefficient'] = coef
+    #regression_results['Standard Error'] = std_err
+    #regression_results['T-Values'] = t_values
+    #regression_results['P-Values'] = p_values
+    #regression_results['Lower Confidence'] = low_conf
+    #regression_results['Upper Confidence'] = upp_conf
 
     for i in range(len(est.params)):
-        params.append(est.params.index[i])
-        coef.append(np.around(est.params[i], 4))
-        std_err.append(np.around(est.bse[i], 4))
-        t_values.append(np.around(est.tvalues[i], 4))
-        p_values.append(np.around(est.pvalues[i], 4))
-        low_conf.append(np.around(conf_int.iloc[0, i], 4))
-        upp_conf.append(np.around(conf_int.iloc[1, i], 4))
-
-    regression_results['Parameters'] = params
-    regression_results['Coefficient'] = coef
-    regression_results['Standard Error'] = std_err
-    regression_results['T-Values'] = t_values
-    regression_results['P-Values'] = p_values
-    regression_results['Lower Confidence'] = low_conf
-    regression_results['Upper Confidence'] = upp_conf
+        parameter = {}
+        parameter['params'] = est.params.index[i]
+        parameter['coef'] = np.around(est.params[i], 4)
+        parameter['std_err'] = np.around(est.bse[i], 4)
+        parameter['t_values'] = np.around(est.tvalues[i], 4)
+        parameter['p_values'] = np.around(est.pvalues[i], 4)
+        parameter['low_conf'] = np.around(conf_int.iloc[0, i], 4)
+        parameter['upp_conf'] = np.around(conf_int.iloc[1, i], 4)
+        parameters.append(parameter)
+    
+    regression_results['Parameters'] = parameters    
 
     return jsonify(regression_results)
 
