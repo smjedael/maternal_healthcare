@@ -1,4 +1,9 @@
 const summaryColumns = {
+    "race_white_nh": "White/Non-White",
+    "race_hispanic": "Hispanic/Non-Hispanic",
+    "race_black": "Black/Non-Black",
+    "race_asian_pi": "Asian & PI/Non-Asian & PI",
+    "race_ai_an": "American Indian & Alaskan/Non-American Indian & Alaskan",
     "avg_prenatal_care_start_month": "Average Prenatal Care Start Month",
     "avg_num_prenatal_visits": "Average Number of Prenatal Visits",
     "avg_body_mass_index": "Average Body Mass Index",
@@ -30,8 +35,10 @@ const summaryColumns = {
     "don_puerperium_embolism_count":"DON: Puerperium Embolism",
     "don_puerperium_other_count":"DON: Puerperium Other",
     "don_all_other_count":"DON: All Other",
-    "total_maternal_deaths":"Total Maternal Deaths"
-};
+    "total_maternal_deaths":"Total Maternal Deaths",
+    // Misc. Variables
+    "const": "Intercept"
+}
 
 const regrColumns = {
     "race_white_nh":"White, Non-Hispanic",
@@ -58,4 +65,26 @@ const regrColumns = {
     "admit_intensive_care":"Admitted to Intensive Care",
     "no_morbidity_reported":"No Morbidity Reported",
     "total_morbidity_reported":"Total Morbidity Reported"
-};
+}
+
+const regrTblFields = [
+    "Dep. Variable",
+    "R-Squared",
+    "Model",
+    "Adj. R-Squared",
+    "Method",
+    "Pseudo R-Squared",
+    "Date",
+    "F-statistic",
+    "Time",
+    "Prob (F-statistic)",
+    "No. Observations",
+    "Log-Liklihood",
+    "Df Residuals",
+    "LL-Null",
+    "Df Model",
+    "AIC",
+    "Scale",
+    "BIC",
+    "Covariance"
+]

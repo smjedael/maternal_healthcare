@@ -34,6 +34,14 @@ tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
+.form-inline label {
+    margin-right: 10px;
+}
+
+.form-inline div.form-group {
+    margin-right: 20px;
+}
+
 .navbar {
     background: #fff
 }

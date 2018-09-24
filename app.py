@@ -6,6 +6,7 @@ import numpy as np
 from datetime import datetime
 
 import statsmodels.api as sm
+import statsmodels.formula.api as smf
 from sklearn.preprocessing import StandardScaler
 
 import sqlalchemy
@@ -84,10 +85,8 @@ df_ufcs_new = df_ufcs_new.append(df_ufcs_asian_pi)
 
 # Merge rebuilt df_ufcs_new table to df_ms and df_mms
 
-df_master = pd.merge(df_ufcs_new, df_ms, on=[
-                     'year', 'race', 'age_cohort'], how='left')
-df_master = pd.merge(df_master, df_mms, on=[
-                     'year', 'race', 'age_cohort'], how='left')
+df_master = df_ufcs_new.merge(df_ms, on=['year', 'race', 'age_cohort'], how='left').merge(
+    df_mms, on=['year', 'race', 'age_cohort'], how='left')
 
 # Scrap temporary dataframes
 del df_ufcs_white_nh
@@ -96,6 +95,14 @@ del df_ufcs_black
 del df_ufcs_ai_an
 del df_ufcs_asian_pi
 del df_ufcs_new
+
+# Add categorical columns to df_master for logistic regression
+df_master['race_white_nh'] = np.where(df_master.race == 'White, Non-Hispanic', 1, 0)
+df_master['race_hispanic'] = np.where(df_master.race == 'Hispanic', 1, 0)
+df_master['race_black'] = np.where(df_master.race == 'Black', 1, 0)
+df_master['race_asian_pi'] = np.where(df_master.race == 'Asian/Pacific Islander', 1, 0)
+df_master['race_ai_an'] = np.where(df_master.race == 'American Indian/Alaskan Native', 1, 0)
+
 
 ###################################################
 # Other Global Variables
@@ -141,70 +148,47 @@ def data_page():
     return render_template("data.html")
 
 # Special Function Routes
-@app.route("/regression/mrs/<predictors>/<response>")
+
+@app.route("/regression/<model>/<predictors>/<response>")
 # Need to look into being able to filter the table
-def performRegression(predictors, response):
-    # Perform Multivariate Regression
+def performRegression(model, predictors, response):
+    # Perform Multivariate Linear Regression
     scale = StandardScaler()
         
     # Here we have 2 variables for multiple regression. If you just want to use one variable for simple linear regression,
     #then use X = df['Interest_Rate'] for example. Alternatively, you may add additional variables within the brackets.
     
     column_list = predictors.split('&')
+    full_list = column_list.copy()
+    full_list.append(response)
 
-    X = df_mrs[column_list]
-    Y = df_mrs[response]
+
+    df_regr = df_master[full_list].copy()
+    df_regr.fillna(value=0, inplace=True)
+    X = df_regr[column_list]
+    Y = df_regr[response]
 
     X[column_list] = scale.fit_transform(X[column_list].as_matrix())
 
-    est = sm.OLS(Y, sm.add_constant(X)).fit()
+    if model == 'ols':
+        est = sm.OLS(Y, sm.tools.add_constant(X)).fit()
+        regr_model = 'OLS'
+        method = 'Least Squares'
+        headers = [{'params':'Parameters','coef':'Coefficient','std_err':'Standard Error',
+                    't_values':'t-value','p_values':'p-value','low_conf':'[0.025','upp_conf':'0.975]'
+                    }]
 
-    # Add standard fields to the dictionary
-    regression_results = {}
-    regression_results['Dep. Variable'] = response
-    regression_results['Model'] = 'OLS'
-    regression_results['Method'] = 'Least Squares'
-    regression_results['Date'] = datetime.now().strftime('%a, %d %b %Y')
-    regression_results['Time'] = datetime.now().strftime('%H:%M:%S')
-    regression_results['No. Observations'] = np.around(est.nobs, 0)
-    regression_results['Df Residuals'] = np.around(est.df_resid, 0)
-    regression_results['Df Model'] = est.df_model
-    regression_results['Covariance Type'] = est.cov_type
-    regression_results['R-Squared'] = np.around(est.rsquared, 4)
-    regression_results['Adj. R-Squared'] = np.around(est.rsquared_adj, 4)
-    regression_results['F-statistic'] = np.around(est.fvalue, 4)
-    regression_results['Prob (F-statistic)'] = np.around(est.f_pvalue, 4)
-    regression_results['Log-Likelihood'] = np.around(est.llf, 4)
-    regression_results['AIC'] = np.around(est.aic, 4)
-    regression_results['BIC'] = np.around(est.bic, 4)
-
+    if model == 'logit':
+        est = sm.Logit(Y, sm.tools.add_constant(X)).fit()
+        regr_model = 'Logit'
+        method = 'MLE'
+        headers = [{'params': 'Parameters', 'coef': 'Coefficient', 'std_err': 'Standard Error',
+                    't_values': 'z-value', 'p_values': 'p-value', 'low_conf': '[0.025', 'upp_conf': '0.975]'
+                    }]
+        
     # Add custom parameters as array of dictionaries
-    params = []
-    coef = []
-    std_err = []
-    t_values = []
-    p_values = []
-    low_conf = []
-    upp_conf = []
-    conf_int = est.conf_int().T
     parameters = []
-
-    # OLDER VERSION
-    #for i in range(len(est.params)):
-    #    params.append(est.params.index[i])
-    #    coef.append(np.around(est.params[i], 4))
-    #    std_err.append(np.around(est.bse[i], 4))
-    #    t_values.append(np.around(est.tvalues[i], 4))
-    #    p_values.append(np.around(est.pvalues[i], 4))
-    #    low_conf.append(np.around(conf_int.iloc[0, i], 4))
-    #    upp_conf.append(np.around(conf_int.iloc[1, i], 4))
-    #regression_results['Parameters'] = params
-    #regression_results['Coefficient'] = coef
-    #regression_results['Standard Error'] = std_err
-    #regression_results['T-Values'] = t_values
-    #regression_results['P-Values'] = p_values
-    #regression_results['Lower Confidence'] = low_conf
-    #regression_results['Upper Confidence'] = upp_conf
+    conf_int = est.conf_int().T
 
     for i in range(len(est.params)):
         parameter = {}
@@ -216,8 +200,40 @@ def performRegression(predictors, response):
         parameter['low_conf'] = np.around(conf_int.iloc[0, i], 4)
         parameter['upp_conf'] = np.around(conf_int.iloc[1, i], 4)
         parameters.append(parameter)
+
+    # Add standard fields to the dictionary
+    regression_results = {}
+    regression_results['Dep. Variable'] = response
+    regression_results['Model'] = regr_model
+    regression_results['Method'] = method
+    regression_results['Date'] = datetime.now().strftime('%a, %d %b %Y')
+    regression_results['Time'] = datetime.now().strftime('%H:%M:%S')
+    regression_results['Df Residuals'] = est.df_resid
+    regression_results['Df Model'] = est.df_model
+    regression_results['Log-Likelihood'] = np.around(est.llf, 4)
+    regression_results['AIC'] = np.around(est.aic, 4)
+    regression_results['BIC'] = np.around(est.bic, 4)
+    regression_results['Param. Headers'] = headers
+    regression_results['Param. Values'] = parameters
+
+    # Try adding model specific fields to dictionary
+
+    # OLS Model Specific Fields
+    if model == 'ols':
+        regression_results['No. Observations'] = np.around(est.nobs, 0)
+        regression_results['Covariance Type'] = est.cov_type
+        regression_results['R-Squared'] = np.around(est.rsquared, 4)
+        regression_results['Adj. R-Squared'] = np.around(est.rsquared_adj, 4)
+        regression_results['F-statistic'] = np.around(est.fvalue, 4)
+        regression_results['Prob (F-statistic)'] = np.around(est.f_pvalue, 4)
+
+    # Logit Model Specific Fields
+    if model == 'logit':
+        regression_results['LL-Null'] = np.around(est.llnull, 4)
+        regression_results['Scale'] = np.around(est.scale, 4)
+        regression_results['Pseudo R-Squared'] = np.around(est.prsquared, 4)
     
-    regression_results['Parameters'] = parameters    
+    print(regression_results)
 
     return jsonify(regression_results)
 
@@ -269,6 +285,7 @@ def pieData(factor):
         chart_data[race] = [trace]
 
     return jsonify(chart_data)
+
 
 if __name__ == "__main__":
     app.run()

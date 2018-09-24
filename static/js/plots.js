@@ -20,7 +20,7 @@ function buildScatterPlot(xvalue, yvalue) {
             yaxis: {
                 title: `${summaryColumns[yvalue]}`
             }
-        };
+        }
         var SCTR = document.getElementById("scatterPlot");
         Plotly.newPlot(SCTR, data, layout);
     });
@@ -44,7 +44,7 @@ function buildCompCharts(factor){
             yaxis: {
                 title: "Occurrences per 10,000 Births"
             }
-        };
+        }
         var GBAR = document.getElementById("groupBar1");
         Plotly.newPlot(GBAR, data, layout);
     });
@@ -53,15 +53,14 @@ function buildCompCharts(factor){
     var url2 = `/plots/race/pie/${factor}`;
     d3.json(url2).then(function (data) {
         var races = Object.keys(data);
-        var i;
-        for (i = 0; i < races.length; i++) {
+        for (var i = 0; i < races.length; i++) {
             var layout = {
                 title: `<b>${races[i]}</b><br>${summaryColumns[factor]}<br>(2009-2016)`,
                 autosize: true
-            };
+            }
             var PIE = document.getElementById(`pie${i}`);
             Plotly.newPlot(PIE, data[races[i]], layout);
-        };
+        }
     });
     
     // Promise Pending
@@ -70,18 +69,6 @@ function buildCompCharts(factor){
     console.log("Data Promise: ", dataPromise1);
     console.log("Data Promise: ", dataPromise2);
    
-}
-
-function populateTable(xvalues, yvalue, type){
-    var url4 = `/regression/mrs/${xvalues}/${yvalue}/${type}`;
-    d3.json(url4).then(function (data) {
-        var myTable = document.getElementById('myTable');
-        myTable.rows[0].cells[1].innerHTML = 'Hello';
-       
-    });
-    
-    const dataPromise4 = d3.json(url4);
-    console.log("Data Promise: ", dataPromise4);
 }
 
 function handleSubmit(){

@@ -58,102 +58,104 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/data/">Data</a>
-                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
         <div class="container">
             <div class="row" style="padding-top:50px;">
-                <div class="col-sm-12 col-md-12" style="padding-bottom:20px;">
-                    <div style="background-color: #fff; padding:30px;">
-                        <h1>Maternal Morbidity/Mortality</h1>
-                        <h2 style="color:#6c757d">Linearity Check</h2>
-                        <hr>
-                        <div class="custom-select">
-                            <form>
-                                X-Axis:
-                                <select name="selXRiskFactor" class="custom-select custom_select mb-3" id="xRiskFactor">
-                                    <option selected>Risk Factor/Cause of Death</option>
-                                    <option value="avg_prenatal_care_start_month">Average Prenatal Care Start Month - Risk Factor</option>
-                                    <option value="avg_num_prenatal_visits">Average Number of Prenatal Visits - Risk Factor</option>
-                                    <option value="avg_body_mass_index">Average Body Mass Index - Risk Factor</option>
-                                    <option value="prepregnancy_diabetes_count">Prepregnancy Diabetes - Risk Factor</option>
-                                    <option value="gestational_diabetes_count">Gestational Diabetes - Risk Factor</option>
-                                    <option value="prepregnancy_hypertension_count">Prepregnancy Hypertension - Risk Factor</option>
-                                    <option value="gestational_hypertension_count">Gestational Hypertension - Risk Factor</option>
-                                    <option value="hypertension_eclampsia_count">Hypertension Eclampsia - Risk Factor</option>
-                                    <option value="prev_preterm_birth_count">Previous Preterm Birth - Risk Factor</option>
-                                    <option value="total_risk_factors">Total Risk Factors - Risk Factor</option>
-                                    <option value="delivery_primary_cesarean_count">Primary Cesarean - Delivery Method</option>
-                                    <option value="delivery_repeat_cesarean_count">Repeat Cesarean - Delivery Method</option>
-                                    <option value="total_prev_cesareans">Total Previous Cesareans - Delivery Method</option>
-                                    <option value="total_delivery_cesarean">Total Cesarean Deliveries - Delivery Method</option>
-                                    <option value="total_delivery_vaginal">Total Vaginal Deliveries - Delivery Method</option>
-                                    <option value="maternal_transfusion_count">Maternal Transfusion - Morbidity</option>
-                                    <option value="perineal_laceration_count">Perineal Laceration - Morbidity</option>
-                                    <option value="ruptured_uterus_count">Ruptured Uterus - Morbidity</option>
-                                    <option value="unplanned_hysterectomy_count">Unplanned Hysterectomy - Morbidity</option>
-                                    <option value="admit_intensive_care_count">Admitted to Intensive Care - Morbidity</option>
-                                    <option value="total_morbidity_count">Total Morbidity Events - Morbidity</option>
-                                    <option value="direct_obstetric_abortive_count">Direct Obstetric Abortive - Mortality</option>
-                                    <option value="direct_obstetric_nonabortive_count">Direct Obstetric Nonabortive - Mortality</option>
-                                    <option value="direct_obstetric_unspecified_count">Direct Obstetric Unspecified - Mortality</option>
-                                    <option value="other_pregnancy_related_count">Other Pregnancy Related - Mortality</option>
-                                    <option value="indirect_obstetric_count">Indirect Obstetric - Mortality</option>
-                                    <option value="don_eclampsia_preeclampsia_count">DON: Eclampsia/Pre-Eclampsia - Mortality</option>
-                                    <option value="don_hemorrhage_count">DON: Hemorrhage - Mortality</option>
-                                    <option value="don_puerperium_embolism_count">DON: Puerperium Embolism - Mortality</option>
-                                    <option value="don_puerperium_other_count">DON: Puerperium Other - Mortality</option>
-                                    <option value="don_all_other_count">DON: All Other - Mortality</option>
-                                    <option value="total_maternal_deaths">Total Maternal Deaths - Mortality</option>
-                                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                Y-Axis:
-                                <select name="selYRiskFactor" class="custom-select custom_select mb-3" id="yRiskFactor">
-                                    <option selected>Risk Factor/Cause of Death</option>
-                                    <option value="avg_prenatal_care_start_month">Average Prenatal Care Start Month - Risk Factor</option>
-                                    <option value="avg_num_prenatal_visits">Average Number of Prenatal Visits - Risk Factor</option>
-                                    <option value="avg_body_mass_index">Average Body Mass Index - Risk Factor</option>
-                                    <option value="prepregnancy_diabetes_count">Prepregnancy Diabetes - Risk Factor</option>
-                                    <option value="gestational_diabetes_count">Gestational Diabetes - Risk Factor</option>
-                                    <option value="prepregnancy_hypertension_count">Prepregnancy Hypertension - Risk Factor</option>
-                                    <option value="gestational_hypertension_count">Gestational Hypertension - Risk Factor</option>
-                                    <option value="hypertension_eclampsia_count">Hypertension Eclampsia - Risk Factor</option>
-                                    <option value="prev_preterm_birth_count">Previous Preterm Birth - Risk Factor</option>
-                                    <option value="total_risk_factors">Total Risk Factors - Risk Factor</option>
-                                    <option value="delivery_primary_cesarean_count">Primary Cesarean - Delivery Method</option>
-                                    <option value="delivery_repeat_cesarean_count">Repeat Cesarean - Delivery Method</option>
-                                    <option value="total_prev_cesareans">Total Previous Cesareans - Delivery Method</option>
-                                    <option value="total_delivery_cesarean">Total Cesarean Deliveries - Delivery Method</option>
-                                    <option value="total_delivery_vaginal">Total Vaginal Deliveries - Delivery Method</option>
-                                    <option value="maternal_transfusion_count">Maternal Transfusion - Morbidity</option>
-                                    <option value="perineal_laceration_count">Perineal Laceration - Morbidity</option>
-                                    <option value="ruptured_uterus_count">Ruptured Uterus - Morbidity</option>
-                                    <option value="unplanned_hysterectomy_count">Unplanned Hysterectomy - Morbidity</option>
-                                    <option value="admit_intensive_care_count">Admitted to Intensive Care - Morbidity</option>
-                                    <option value="total_morbidity_count">Total Morbidity Events - Morbidity</option>
-                                    <option value="direct_obstetric_abortive_count">Direct Obstetric Abortive - Mortality</option>
-                                    <option value="direct_obstetric_nonabortive_count">Direct Obstetric Nonabortive - Mortality</option>
-                                    <option value="direct_obstetric_unspecified_count">Direct Obstetric Unspecified - Mortality</option>
-                                    <option value="other_pregnancy_related_count">Other Pregnancy Related - Mortality</option>
-                                    <option value="indirect_obstetric_count">Indirect Obstetric - Mortality</option>
-                                    <option value="don_eclampsia_preeclampsia_count">DON: Eclampsia/Pre-Eclampsia - Mortality</option>
-                                    <option value="don_hemorrhage_count">DON: Hemorrhage - Mortality</option>
-                                    <option value="don_puerperium_embolism_count">DON: Puerperium Embolism - Mortality</option>
-                                    <option value="don_puerperium_other_count">DON: Puerperium Other - Mortality</option>
-                                    <option value="don_all_other_count">DON: All Other - Mortality</option>
-                                    <option value="total_maternal_deaths">Total Maternal Deaths - Mortality</option>
-                                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button id="plotButton" type="submit" class="btn btn-default">Plot Graph</button>
-                            </form>
-                        </div>
-                        <div id="scatterPlot"></div>
-                    </div>  
+                <div class="col-sm-12 col-md-12" style="background-color: #fff; padding:30px;">
+                    <h1>Maternal Morbidity/Mortality</h1>
+                    <h2 style="color:#6c757d">Linearity Check</h2>
+                    <hr>
                 </div>
-            </div><br><br><br>
-
+            </div>
+            <div class="row" style="background-color: #fff; padding-left:30px;padding-right:30px;">
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <label for="xRiskFactor" >X-Axis:</label>
+                        <select class="form-control form-control-sm" id="xRiskFactor">
+                            <option selected>Risk Factor/Cause of Death</option>
+                            <option value="avg_prenatal_care_start_month">Average Prenatal Care Start Month - Risk Factor</option>
+                            <option value="avg_num_prenatal_visits">Average Number of Prenatal Visits - Risk Factor</option>
+                            <option value="avg_body_mass_index">Average Body Mass Index - Risk Factor</option>
+                            <option value="prepregnancy_diabetes_count">Prepregnancy Diabetes - Risk Factor</option>
+                            <option value="gestational_diabetes_count">Gestational Diabetes - Risk Factor</option>
+                            <option value="prepregnancy_hypertension_count">Prepregnancy Hypertension - Risk Factor</option>
+                            <option value="gestational_hypertension_count">Gestational Hypertension - Risk Factor</option>
+                            <option value="hypertension_eclampsia_count">Hypertension Eclampsia - Risk Factor</option>
+                            <option value="prev_preterm_birth_count">Previous Preterm Birth - Risk Factor</option>
+                            <option value="total_risk_factors">Total Risk Factors - Risk Factor</option>
+                            <option value="delivery_primary_cesarean_count">Primary Cesarean - Delivery Method</option>
+                            <option value="delivery_repeat_cesarean_count">Repeat Cesarean - Delivery Method</option>
+                            <option value="total_prev_cesareans">Total Previous Cesareans - Delivery Method</option>
+                            <option value="total_delivery_cesarean">Total Cesarean Deliveries - Delivery Method</option>
+                            <option value="total_delivery_vaginal">Total Vaginal Deliveries - Delivery Method</option>
+                            <option value="maternal_transfusion_count">Maternal Transfusion - Morbidity</option>
+                            <option value="perineal_laceration_count">Perineal Laceration - Morbidity</option>
+                            <option value="ruptured_uterus_count">Ruptured Uterus - Morbidity</option>
+                            <option value="unplanned_hysterectomy_count">Unplanned Hysterectomy - Morbidity</option>
+                            <option value="admit_intensive_care_count">Admitted to Intensive Care - Morbidity</option>
+                            <option value="total_morbidity_count">Total Morbidity Events - Morbidity</option>
+                            <option value="direct_obstetric_abortive_count">Direct Obstetric Abortive - Mortality</option>
+                            <option value="direct_obstetric_nonabortive_count">Direct Obstetric Nonabortive - Mortality</option>
+                            <option value="direct_obstetric_unspecified_count">Direct Obstetric Unspecified - Mortality</option>
+                            <option value="other_pregnancy_related_count">Other Pregnancy Related - Mortality</option>
+                            <option value="indirect_obstetric_count">Indirect Obstetric - Mortality</option>
+                            <option value="don_eclampsia_preeclampsia_count">DON: Eclampsia/Pre-Eclampsia - Mortality</option>
+                            <option value="don_hemorrhage_count">DON: Hemorrhage - Mortality</option>
+                            <option value="don_puerperium_embolism_count">DON: Puerperium Embolism - Mortality</option>
+                            <option value="don_puerperium_other_count">DON: Puerperium Other - Mortality</option>
+                            <option value="don_all_other_count">DON: All Other - Mortality</option>
+                            <option value="total_maternal_deaths">Total Maternal Deaths - Mortality</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="yRiskFactor">Y-Axis:</label>
+                        <select class="form-control form-control-sm" id="yRiskFactor">
+                            <option selected>Risk Factor/Cause of Death</option>
+                            <option value="avg_prenatal_care_start_month">Average Prenatal Care Start Month - Risk Factor</option>
+                            <option value="avg_num_prenatal_visits">Average Number of Prenatal Visits - Risk Factor</option>
+                            <option value="avg_body_mass_index">Average Body Mass Index - Risk Factor</option>
+                            <option value="prepregnancy_diabetes_count">Prepregnancy Diabetes - Risk Factor</option>
+                            <option value="gestational_diabetes_count">Gestational Diabetes - Risk Factor</option>
+                            <option value="prepregnancy_hypertension_count">Prepregnancy Hypertension - Risk Factor</option>
+                            <option value="gestational_hypertension_count">Gestational Hypertension - Risk Factor</option>
+                            <option value="hypertension_eclampsia_count">Hypertension Eclampsia - Risk Factor</option>
+                            <option value="prev_preterm_birth_count">Previous Preterm Birth - Risk Factor</option>
+                            <option value="total_risk_factors">Total Risk Factors - Risk Factor</option>
+                            <option value="delivery_primary_cesarean_count">Primary Cesarean - Delivery Method</option>
+                            <option value="delivery_repeat_cesarean_count">Repeat Cesarean - Delivery Method</option>
+                            <option value="total_prev_cesareans">Total Previous Cesareans - Delivery Method</option>
+                            <option value="total_delivery_cesarean">Total Cesarean Deliveries - Delivery Method</option>
+                            <option value="total_delivery_vaginal">Total Vaginal Deliveries - Delivery Method</option>
+                            <option value="maternal_transfusion_count">Maternal Transfusion - Morbidity</option>
+                            <option value="perineal_laceration_count">Perineal Laceration - Morbidity</option>
+                            <option value="ruptured_uterus_count">Ruptured Uterus - Morbidity</option>
+                            <option value="unplanned_hysterectomy_count">Unplanned Hysterectomy - Morbidity</option>
+                            <option value="admit_intensive_care_count">Admitted to Intensive Care - Morbidity</option>
+                            <option value="total_morbidity_count">Total Morbidity Events - Morbidity</option>
+                            <option value="direct_obstetric_abortive_count">Direct Obstetric Abortive - Mortality</option>
+                            <option value="direct_obstetric_nonabortive_count">Direct Obstetric Nonabortive - Mortality</option>
+                            <option value="direct_obstetric_unspecified_count">Direct Obstetric Unspecified - Mortality</option>
+                            <option value="other_pregnancy_related_count">Other Pregnancy Related - Mortality</option>
+                            <option value="indirect_obstetric_count">Indirect Obstetric - Mortality</option>
+                            <option value="don_eclampsia_preeclampsia_count">DON: Eclampsia/Pre-Eclampsia - Mortality</option>
+                            <option value="don_hemorrhage_count">DON: Hemorrhage - Mortality</option>
+                            <option value="don_puerperium_embolism_count">DON: Puerperium Embolism - Mortality</option>
+                            <option value="don_puerperium_other_count">DON: Puerperium Other - Mortality</option>
+                            <option value="don_all_other_count">DON: All Other - Mortality</option>
+                            <option value="total_maternal_deaths">Total Maternal Deaths - Mortality</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button id="plotButton" type="submit" class="btn btn-default">Plot Graph</button>
+                    </div> 
+                </form>
+            </div>
+            <div class="row" style="background-color: #fff; padding-left:30px;padding-right:30px;">
+                <div id="scatterPlot"></div>
+            </div>
         <div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
